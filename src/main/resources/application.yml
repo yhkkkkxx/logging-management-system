@@ -1,0 +1,9 @@
+mqtt:
+  url : ${url}
+  qos: ${qos}
+  topic: ${topic}
+  user : ${user}
+  password : ${password}
+spring:
+  main:
+    web-application-type: none
