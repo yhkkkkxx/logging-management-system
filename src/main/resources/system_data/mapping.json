@@ -1,0 +1,29 @@
+{
+  "properties": {
+
+    "dataLatitude": {
+      "type": "long"
+    },
+
+    "dataLongitude": {
+      "type": "long"
+    },
+
+    "dataAngleX": {
+      "type": "long"
+    },
+
+    "dataAngleY": {
+      "type": "long"
+    },
+
+    "status": {
+      "type": "byte"
+    },
+
+    "battery": {
+      "type": "long"
+    }
+  }
+
+}
