@@ -15,8 +15,9 @@ import java.util.List;
 public class DataController {
     private final DataService dataService;
 
+
     @PostMapping
-    public SearchData create() { return dataService.create(); }
+    public SearchData create(@RequestParam String text) { return dataService.create(text); }
 
     @GetMapping
     public List<SearchData> find() { return dataService.find(); }

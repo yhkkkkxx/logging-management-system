@@ -15,13 +15,19 @@ public class DataService {
     private final SearchDataRepository searchDataRepository;
     private int counter = 0;
 
-    public SearchData create() {
-        counter ++;
-        SearchData searchData = new SearchData();
+//    public SearchData create() {
+//        counter ++;
+//        SearchData searchData = new SearchData();
+//        //searchData.setDataName("hi" + counter);
+//        return searchDataRepository.save(searchData);
+//    }
+
+    public SearchData create(String text) { // 여기서 텍스트를 넘기면 레포로 세이브 되는 걸로
+//        counter ++;
+        SearchData searchData = new SearchData(text);
         //searchData.setDataName("hi" + counter);
         return searchDataRepository.save(searchData);
     }
-
     public List<SearchData> find() {
         return StreamSupport.stream(searchDataRepository.findAll().spliterator(), false)
                 .toList();
