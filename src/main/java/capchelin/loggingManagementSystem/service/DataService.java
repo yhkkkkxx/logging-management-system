@@ -18,7 +18,7 @@ public class DataService {
     public SearchData create() {
         counter ++;
         SearchData searchData = new SearchData();
-        searchData.setDataName("hi" + counter);
+        //searchData.setDataName("hi" + counter);
         return searchDataRepository.save(searchData);
     }
 

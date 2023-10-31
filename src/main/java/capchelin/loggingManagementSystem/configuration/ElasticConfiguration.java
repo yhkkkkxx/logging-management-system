@@ -24,7 +24,7 @@ import org.springframework.data.elasticsearch.repository.config.EnableElasticsea
 import java.net.InetAddress;
 
 @EnableElasticsearchAuditing
-@EnableElasticsearchRepositories(basePackages = "capchelin.loggingManagement.repository")
+@EnableElasticsearchRepositories(basePackages = "capchelin.loggingManagementSystem.repository")
 @Configuration
 public class ElasticConfiguration extends ElasticsearchConfiguration {
     @Value("${spring.elastic.url}")
@@ -39,7 +39,7 @@ public class ElasticConfiguration extends ElasticsearchConfiguration {
     public ClientConfiguration clientConfiguration() {
         return ClientConfiguration.builder()
                 .connectedTo(elasticUrl)
-                .usingSsl()
+//                .usingSsl()
                 .withBasicAuth(user, password)
                 .build();
     }
