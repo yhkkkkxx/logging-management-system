@@ -1,6 +1,7 @@
 package capchelin.loggingManagementSystem.configuration;
 
 import capchelin.loggingManagementSystem.service.DataService;
+import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.integration.annotation.ServiceActivator;
 import org.springframework.integration.channel.DirectChannel;
+import org.springframework.integration.mqtt.core.DefaultMqttPahoClientFactory;
 import org.springframework.integration.mqtt.inbound.MqttPahoMessageDrivenChannelAdapter;
 import org.springframework.integration.mqtt.support.DefaultPahoMessageConverter;
 import org.springframework.integration.mqtt.support.MqttHeaders;
@@ -21,10 +23,16 @@ import java.util.UUID;
 //@AllArgsConstructor
 @Configuration
 public class MqttSubConfiguration {
-    private static final Logger LOG = LoggerFactory.getLogger(MqttSubConfiguration.class);
 
     @Value("${mqtt.url}")
     private String BROKER_URL;
+
+    @Value("${mqtt.user:}")
+    private String mqttUsername;
+
+    @Value("${mqtt.password:}")
+    private String mqttPassword;
+
 
     @Value("${mqtt.qos}")
     private int QOS;
@@ -38,6 +46,21 @@ public class MqttSubConfiguration {
   
 
     final private String MQTT_CLIENT_ID = UUID.randomUUID().toString();
+
+    @Bean
+    public MqttConnectOptions connectOptions() {
+        MqttConnectOptions options = new MqttConnectOptions();
+        options.setCleanSession(true);
+        options.setUserName(mqttUsername);
+        options.setPassword(mqttPassword.toCharArray());
+        return options;
+    }
+    @Bean
+    public DefaultMqttPahoClientFactory defaultMqttPahoClientFactory() {
+        DefaultMqttPahoClientFactory clientFactory = new DefaultMqttPahoClientFactory();
+        clientFactory.setConnectionOptions(connectOptions());
+        return clientFactory;
+    }
 
     @Bean
     public MessageChannel mqttInputChannel() {
