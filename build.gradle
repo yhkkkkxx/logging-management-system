@@ -25,7 +25,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-integration'
-	implementation 'org.springframework.integration:spring-integration-mqtt'
+	implementation 'org.springframework.integration:spring-integration-mqtt:5.5.0'
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
     implementation 'org.jetbrains:annotations:24.0.0'
     testImplementation 'junit:junit:4.13.1'

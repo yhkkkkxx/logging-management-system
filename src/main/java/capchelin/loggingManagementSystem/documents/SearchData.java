@@ -34,4 +34,14 @@ public class SearchData {
         this.message = message;
     }
 
+    public SearchData(String dataId, Long dataLatitude, Long dataLongitude, Long dataAngleX, Long dataAngleY, Byte status, Long battery) {
+        this.dataId = dataId;
+        this.dataLatitude = dataLatitude;
+        this.dataLongitude = dataLongitude;
+        this.dataAngleX = dataAngleX;
+        this.dataAngleY = dataAngleY;
+        this.status = status;
+        this.battery = battery;
+    }
+
 }

@@ -22,9 +22,8 @@ public class DataService {
 //        return searchDataRepository.save(searchData);
 //    }
 
-    public SearchData create(String text) { // 여기서 텍스트를 넘기면 레포로 세이브 되는 걸로
+    public SearchData create(SearchData searchData) { // 여기서 텍스트를 넘기면 레포로 세이브 되는 걸로
 //        counter ++;
-        SearchData searchData = new SearchData(text);
         //searchData.setDataName("hi" + counter);
         return searchDataRepository.save(searchData);
     }

@@ -1,9 +1,10 @@
 package capchelin.loggingManagementSystem.configuration;
 
+import capchelin.loggingManagementSystem.documents.SearchData;
 import capchelin.loggingManagementSystem.service.DataService;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -17,6 +18,7 @@ import org.springframework.integration.mqtt.support.MqttHeaders;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.MessageHandler;
 
+import java.io.IOException;
 import java.util.UUID;
 
 //@Builder
@@ -82,10 +84,28 @@ public class MqttSubConfiguration {
     @ServiceActivator(inputChannel = "mqttInputChannel")
     public MessageHandler inboundMessageHandler() {
         return message -> {
-            String topic = (String) message.getHeaders().get(MqttHeaders.RECEIVED_TOPIC);
-            System.out.println("Topic:" + topic);
-            System.out.println("Payload:" + message.getPayload());
-            dataService.create(message.getPayload().toString());
+//            String topic = (String) message.getHeaders().get(MqttHeaders.RECEIVED_TOPIC);
+            String jsonPayload = (String) message.getPayload();
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            try {
+                JsonNode jsonNode = objectMapper.readTree(jsonPayload);
+
+                String dataId = jsonNode.get("dataId").asText();
+                Long dataLatitude = jsonNode.get("dataLatitude").asLong();
+                Long dataLongitude = jsonNode.get("dataLongitude").asLong();
+                Long dataAngleX = jsonNode.get("dataAngleX").asLong();
+                Long dataAngleY = jsonNode.get("dataAngleY").asLong();
+                Byte status = (byte) jsonNode.get("status").asInt();
+                Long battery = jsonNode.get("battery").asLong();
+
+                SearchData searchData = new SearchData(dataId, dataLatitude, dataLongitude, dataAngleX, dataAngleY, status, battery);
+
+                dataService.create(searchData);
+            } catch (IOException e) {
+                // JSON 파싱 에러 처리
+                e.printStackTrace();
+            }
 
         };
     }
