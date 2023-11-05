@@ -14,7 +14,6 @@ import org.springframework.integration.channel.DirectChannel;
 import org.springframework.integration.mqtt.core.DefaultMqttPahoClientFactory;
 import org.springframework.integration.mqtt.inbound.MqttPahoMessageDrivenChannelAdapter;
 import org.springframework.integration.mqtt.support.DefaultPahoMessageConverter;
-import org.springframework.integration.mqtt.support.MqttHeaders;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.MessageHandler;
 
@@ -29,10 +28,10 @@ public class MqttSubConfiguration {
     @Value("${mqtt.url}")
     private String BROKER_URL;
 
-    @Value("${mqtt.user:}")
+    @Value("${mqtt.user}")
     private String mqttUsername;
 
-    @Value("${mqtt.password:}")
+    @Value("${mqtt.password}")
     private String mqttPassword;
 
 
@@ -91,16 +90,19 @@ public class MqttSubConfiguration {
             try {
                 JsonNode jsonNode = objectMapper.readTree(jsonPayload);
 
-                String dataId = jsonNode.get("dataId").asText();
-                Long dataLatitude = jsonNode.get("dataLatitude").asLong();
-                Long dataLongitude = jsonNode.get("dataLongitude").asLong();
-                Long dataAngleX = jsonNode.get("dataAngleX").asLong();
-                Long dataAngleY = jsonNode.get("dataAngleY").asLong();
-                Byte status = (byte) jsonNode.get("status").asInt();
-                Long battery = jsonNode.get("battery").asLong();
 
-                SearchData searchData = new SearchData(dataId, dataLatitude, dataLongitude, dataAngleX, dataAngleY, status, battery);
+                String applicationID = jsonNode.get("applicationID").asText();
+                String applicationName = jsonNode.get("applicationName").asText();
+                String deviceName = jsonNode.get("deviceName").asText();
+//                Long dataLatitude = jsonNode.get("dataLatitude").asLong();
+//                Long dataLongitude = jsonNode.get("dataLongitude").asLong();
+//                Long dataAngleX = jsonNode.get("dataAngleX").asLong();
+//                Long dataAngleY = jsonNode.get("dataAngleY").asLong();
+//                Byte status = (byte) jsonNode.get("status").asInt();
+//                Long battery = jsonNode.get("battery").asLong();
 
+                //SearchData searchData = new SearchData(dataId, dataLatitude, dataLongitude, dataAngleX, dataAngleY, status, battery);
+                SearchData searchData = new SearchData(applicationID, applicationName, deviceName);
                 dataService.create(searchData);
             } catch (IOException e) {
                 // JSON 파싱 에러 처리
