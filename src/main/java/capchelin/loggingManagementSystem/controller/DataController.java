@@ -17,7 +17,7 @@ public class DataController {
 
 
     @PostMapping
-    public SearchData create(@RequestParam SearchData text) { return dataService.create(text); }
+    public SearchData create(@RequestParam SearchData searchData) { return dataService.create(searchData); }
 
     @GetMapping
     public List<SearchData> find() { return dataService.find(); }

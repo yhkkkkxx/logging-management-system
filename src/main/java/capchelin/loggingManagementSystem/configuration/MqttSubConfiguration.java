@@ -90,7 +90,6 @@ public class MqttSubConfiguration {
             try {
                 JsonNode jsonNode = objectMapper.readTree(jsonPayload);
 
-
                 String applicationID = jsonNode.get("applicationID").asText();
                 String applicationName = jsonNode.get("applicationName").asText();
                 String deviceName = jsonNode.get("deviceName").asText();
