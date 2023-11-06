@@ -2,6 +2,7 @@ package capchelin.loggingManagementSystem.configuration;
 
 import capchelin.loggingManagementSystem.documents.SearchData;
 import capchelin.loggingManagementSystem.service.DataService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
@@ -84,29 +85,17 @@ public class MqttSubConfiguration {
     public MessageHandler inboundMessageHandler() {
         return message -> {
 //            String topic = (String) message.getHeaders().get(MqttHeaders.RECEIVED_TOPIC);
-            String jsonPayload = (String) message.getPayload();
 
-            ObjectMapper objectMapper = new ObjectMapper();
             try {
-                JsonNode jsonNode = objectMapper.readTree(jsonPayload);
-
-                String applicationID = jsonNode.get("applicationID").asText();
-                String applicationName = jsonNode.get("applicationName").asText();
-                String deviceName = jsonNode.get("deviceName").asText();
-//                Long dataLatitude = jsonNode.get("dataLatitude").asLong();
-//                Long dataLongitude = jsonNode.get("dataLongitude").asLong();
-//                Long dataAngleX = jsonNode.get("dataAngleX").asLong();
-//                Long dataAngleY = jsonNode.get("dataAngleY").asLong();
-//                Byte status = (byte) jsonNode.get("status").asInt();
-//                Long battery = jsonNode.get("battery").asLong();
-
-                //SearchData searchData = new SearchData(dataId, dataLatitude, dataLongitude, dataAngleX, dataAngleY, status, battery);
-                SearchData searchData = new SearchData(applicationID, applicationName, deviceName);
+                String jsonPayload = (String) message.getPayload();
+                ObjectMapper objectMapper = new ObjectMapper();
+                SearchData searchData = objectMapper.readValue(jsonPayload, SearchData.class);
                 dataService.create(searchData);
-            } catch (IOException e) {
-                // JSON 파싱 에러 처리
-                e.printStackTrace();
+                System.out.println("SearchData successfully processed and saved to Elasticsearch.");
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
             }
+
 
         };
     }
