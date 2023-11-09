@@ -15,6 +15,7 @@ import org.springframework.integration.channel.DirectChannel;
 import org.springframework.integration.mqtt.core.DefaultMqttPahoClientFactory;
 import org.springframework.integration.mqtt.inbound.MqttPahoMessageDrivenChannelAdapter;
 import org.springframework.integration.mqtt.support.DefaultPahoMessageConverter;
+import org.springframework.integration.mqtt.support.MqttHeaders;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.MessageHandler;
 
@@ -85,16 +86,19 @@ public class MqttSubConfiguration {
     public MessageHandler inboundMessageHandler() {
         return message -> {
 //            String topic = (String) message.getHeaders().get(MqttHeaders.RECEIVED_TOPIC);
-
-            try {
-                String jsonPayload = (String) message.getPayload();
+                String topic = (String) message.getHeaders().get(MqttHeaders.RECEIVED_TOPIC);
+                System.out.println("Topic:" + topic);
+                System.out.println("Payload" + message.getPayload());
                 ObjectMapper objectMapper = new ObjectMapper();
-                SearchData searchData = objectMapper.readValue(jsonPayload, SearchData.class);
-                dataService.create(searchData);
-                System.out.println("SearchData successfully processed and saved to Elasticsearch.");
-            } catch (JsonProcessingException e) {
-                throw new RuntimeException(e);
-            }
+//            try {
+//                String jsonPayload = (String) message.getPayload();
+//                ObjectMapper objectMapper = new ObjectMapper();
+//                SearchData searchData = objectMapper.readValue(jsonPayload, SearchData.class);
+//                dataService.create(searchData);
+//                System.out.println("SearchData successfully processed and saved to Elasticsearch.");
+//            } catch (JsonProcessingException e) {
+//                throw new RuntimeException(e);
+//            }
 
 
         };

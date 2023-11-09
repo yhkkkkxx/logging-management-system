@@ -3,6 +3,7 @@ package capchelin.loggingManagementSystem.controller;
 import capchelin.loggingManagementSystem.documents.SearchData;
 import capchelin.loggingManagementSystem.service.DataService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.annotation.Id;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +18,7 @@ public class DataController {
 
 
     @PostMapping
-    public SearchData create(@RequestParam SearchData searchData) { return dataService.create(searchData); }
+    public SearchData create(@RequestParam(value = "searchData", required = false) SearchData searchData) { return dataService.create(searchData); }
 
     @GetMapping
     public List<SearchData> find() { return dataService.find(); }

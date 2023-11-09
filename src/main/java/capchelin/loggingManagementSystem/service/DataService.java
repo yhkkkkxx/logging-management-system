@@ -5,6 +5,7 @@ import capchelin.loggingManagementSystem.repository.SearchDataRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.stream.StreamSupport;
@@ -22,7 +23,7 @@ public class DataService {
 //        return searchDataRepository.save(searchData);
 //    }
 
-    public SearchData create(SearchData searchData) { // 여기서 텍스트를 넘기면 레포로 세이브 되는 걸로
+    public SearchData create(@RequestParam(value = "searchData", required = false) SearchData searchData) { // 여기서 텍스트를 넘기면 레포로 세이브 되는 걸로
 //        counter ++;
         //searchData.setDataName("hi" + counter);
         return searchDataRepository.save(searchData);
