@@ -11,29 +11,32 @@ import java.util.List;
 
 @Data
 @Document(indexName = "mqtt_data")
+@NoArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SearchData {
 
-    String message;
 
     // Getter 및 Setter 메서드 추가
     @Getter
     @Id
     private String applicationID;
-    @Getter
+
     private String applicationName;
-    @Getter
+
     private String deviceName;
-    @Getter
+
     private String devEUI;
-    @Getter
+
     private List<RxInfo> rxInfo;
-    @Getter
+
     private TxInfo txInfo;
-    @Getter
+
     private boolean adr;
+
     private int fCnt;
+
     private int fPort;
-    @Getter
+
     private String data;
 
 //    @Id
