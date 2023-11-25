@@ -1,5 +1,6 @@
 package capchelin.loggingManagementSystem.controller;
 
+import capchelin.loggingManagementSystem.documents.Payload;
 import capchelin.loggingManagementSystem.documents.SearchData;
 import capchelin.loggingManagementSystem.service.DataService;
 import lombok.RequiredArgsConstructor;
@@ -14,24 +15,21 @@ import java.util.List;
 public class DataController {
     private final DataService dataService;
 
-//
-//    @PostMapping
-//    public SearchData create(@RequestBody SearchData searchData) {
-//
-//        return dataService.create(searchData);
+    @PostMapping("/application")
+    public SearchData createApp(Message message) {
+        SearchData searchData = new SearchData();
+        return dataService.createApp(message);
+    }
+
+    @PostMapping("/gateway")
+    public Payload createGateway(Message message) {
+        return dataService.createGateway(message);
+    }
+
+//    @PostMapping("/sample")
+//    public String create1(String searchData) {
+//        return "sample";
 //    }
-    @PostMapping
-    public SearchData create(Message message) {
-
-        return dataService.create(message);
-    }
-
-    @PostMapping("/sample")
-    public String create1(String searchData) {
-//        return dataService.create(searchData);
-        return "sample";
-    }
-
 
     @GetMapping
     public List<SearchData> find() { return dataService.find(); }

@@ -1,13 +1,13 @@
 package capchelin.loggingManagementSystem.service;
 
+import capchelin.loggingManagementSystem.documents.Payload;
 import capchelin.loggingManagementSystem.documents.SearchData;
+import capchelin.loggingManagementSystem.repository.PayloadRepository;
 import capchelin.loggingManagementSystem.repository.SearchDataRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.messaging.Message;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,33 +19,46 @@ import java.util.stream.StreamSupport;
 @RequiredArgsConstructor
 public class DataService {
     private final SearchDataRepository searchDataRepository;
-    private int counter = 0;
+    private final PayloadRepository payloadRepository;
 
-//    public SearchData create(SearchData searchData) { // 여기서 텍스트를 넘기면 레포로 세이브 되는 걸로
-////        counter ++;
-//        //searchData.setDataName("hi" + counter);
-//
-//        //data parsing and decoding
+    public SearchData createApp(@NotNull Message message) {
+        System.out.println("this is application");
 
-    public SearchData create(@NotNull Message message) { // 여기서 텍스트를 넘기면 레포로 세이브 되는 걸로
-
-        System.out.println("Data Service: " + message);
-        Object obj = message.getPayload();
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             SearchData searchData = objectMapper.readValue(message.getPayload().toString(), SearchData.class);
-            System.out.println("data: "+searchData.getData());
-            System.out.println("appID: "+searchData.getApplicationID());
-
+            System.out.println("data: " + searchData.getData());
             System.out.println("SearchData successfully processed and saved to Elasticsearch.");
+
             return searchDataRepository.save(searchData);
 
         } catch (JsonProcessingException e) {
             e.printStackTrace();
             throw new RuntimeException("Failed to process the MQTT message", e);
         }
+
     }
 
+    public Payload createGateway(@NotNull Message message) {
+
+        System.out.println("this is gateway");
+
+        Object obj = message.getPayload();
+        ObjectMapper objectMapper = new ObjectMapper();
+        String hi = obj.toString();
+        System.out.println(hi);
+
+        String payloadJson = "{ \"payload\" : \"";
+        payloadJson += obj.toString();
+        payloadJson += "\" }";
+        System.out.println(payloadJson);
+
+        MessageHeaders headers = message.getHeaders();
+        Long id = (Long)headers.get("timestamp");
+        Payload payload = new Payload(id, headers, message.getPayload().toString());
+
+        return payloadRepository.save(payload);
+    }
 
     public List<SearchData> find() {
         return StreamSupport.stream(searchDataRepository.findAll().spliterator(), false)

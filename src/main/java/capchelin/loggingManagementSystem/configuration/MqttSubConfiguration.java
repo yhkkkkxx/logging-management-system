@@ -22,12 +22,8 @@ import org.springframework.integration.mqtt.support.MqttHeaders;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.MessageHandler;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
-//@Builder
-//@AllArgsConstructor
 @Configuration
 @IntegrationComponentScan
 public class MqttSubConfiguration {
@@ -100,24 +96,21 @@ public class MqttSubConfiguration {
             String topic = (String) message.getHeaders().get(MqttHeaders.RECEIVED_TOPIC);
             String payload = message.getPayload().toString();
 
+            Integer mqttId = (int) message.getHeaders().get("mqtt_id");
+
+            String id = message.getHeaders().get("id").toString();
             System.out.println("Header: "+ header);
             System.out.println("Topic: " + topic);
             System.out.println("Payload: " + message.getPayload());
             ObjectMapper objectMapper = new ObjectMapper();
-            dataService.create(message);
+            System.out.println("this is " + message.getHeaders().get("mqtt_receivedTopic"));
 
-
-//            try {
-//                dataService.create(message);
-//                SearchData searchData = objectMapper.readValue(message.getPayload().toString(), SearchData.class);
-//                //dataService.create(searchData);
-//                System.out.println("SearchData successfully processed and saved to Elasticsearch.");
-//
-//            } catch (JsonProcessingException e) {
-//                e.printStackTrace();
-//                throw new RuntimeException("Failed to process the MQTT message", e);
-//            }
-
+            if(message.getHeaders().get("mqtt_receivedTopic").toString().startsWith("gateway/")) {
+                dataService.createGateway(message);
+            }
+            if(message.getHeaders().get("mqtt_receivedTopic").toString().startsWith("application/")) {
+                dataService.createApp(message);
+            }
 
         };
     }
