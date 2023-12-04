@@ -54,9 +54,11 @@ public class DataService {
         payloadJson += "\" }";
         System.out.println(payloadJson);
 
+        //System.currentTimeMillis()
         MessageHeaders headers = message.getHeaders();
         Long id = (Long)headers.get("timestamp");
-        Payload payload = new Payload(id, headers, message.getPayload().toString(), System.currentTimeMillis());
+        Payload payload = new Payload(id, headers, message.getPayload().toString());
+        payload.setId(System.currentTimeMillis());
 
         return payloadRepository.save(payload);
     }
