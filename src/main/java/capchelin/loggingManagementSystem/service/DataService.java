@@ -30,7 +30,7 @@ public class DataService {
             SearchData searchData = objectMapper.readValue(message.getPayload().toString(), SearchData.class);
             System.out.println("data: " + searchData.getData());
             System.out.println("SearchData successfully processed and saved to Elasticsearch.");
-
+            searchData.setCurTime(System.currentTimeMillis());
             return searchDataRepository.save(searchData);
 
         } catch (JsonProcessingException e) {

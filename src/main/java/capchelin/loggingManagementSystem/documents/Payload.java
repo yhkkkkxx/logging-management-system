@@ -17,15 +17,14 @@ import java.util.List;
 @Document(indexName = "payloads")
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Getter
+@Data
 @AllArgsConstructor
 public class Payload {
     @Id
+    @Field(name = "@timestamp", type = FieldType.Date)
     private Long id;
 
     private MessageHeaders headers;
     @JsonProperty("payload")
     private String payload;
-
-    @Field(name = "@timestamp", type = FieldType.Date)
-    private long curTime;
 }
