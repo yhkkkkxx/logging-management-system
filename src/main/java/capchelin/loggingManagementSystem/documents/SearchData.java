@@ -40,52 +40,9 @@ public class SearchData {
 
     private String data;
 
-//    @Id
-//    private String dataId;
-//    private Long dataLatitude;
-//    private Long dataLongitude;
-//    private Long dataAngleX;
-//    private Long dataAngleY;
-//    private Byte status;
-//    private Long battery;
-    @CreatedDate
-    @Field(type = FieldType.Date, format = DateFormat.basic_date_time)
-    private Instant createdDate;
-    @LastModifiedDate
-    @Field(type = FieldType.Date, format = DateFormat.basic_date_time)
-    private Instant lastModifiedDate;
+    private long curTime = System.currentTimeMillis();
 
-    public void setApplicationID(String applicationID) {
-        this.applicationID = applicationID;
-    }
-
-    public void setApplicationName(String applicationName) {
-        this.applicationName = applicationName;
-    }
-
-    public void setDeviceName(String deviceName) {
-        this.deviceName = deviceName;
-    }
-
-    public void setDevEUI(String devEUI) {
-        this.devEUI = devEUI;
-    }
-
-    public void setRxInfo(List<RxInfo> rxInfo) {
-        this.rxInfo = rxInfo;
-    }
-
-    public void setTxInfo(TxInfo txInfo) {
-        this.txInfo = txInfo;
-    }
-
-    public void setAdr(boolean adr) {
-        this.adr = adr;
-    }
-
-    public int getFCnt() {
-        return fCnt;
-    }
+}
 
     public void setFCnt(int fCnt) {
         this.fCnt = fCnt;

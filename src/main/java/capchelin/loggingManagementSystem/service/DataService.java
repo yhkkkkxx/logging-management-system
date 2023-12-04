@@ -55,7 +55,7 @@ public class DataService {
 
         MessageHeaders headers = message.getHeaders();
         Long id = (Long)headers.get("timestamp");
-        Payload payload = new Payload(id, headers, message.getPayload().toString());
+        Payload payload = new Payload(id, headers, message.getPayload().toString(), System.currentTimeMillis());
 
         return payloadRepository.save(payload);
     }
