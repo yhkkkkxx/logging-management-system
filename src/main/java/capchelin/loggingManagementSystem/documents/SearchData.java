@@ -1,5 +1,9 @@
 package capchelin.loggingManagementSystem.documents;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
@@ -17,8 +21,6 @@ import java.util.List;
 public class SearchData {
 
 
-    // Getter 및 Setter 메서드 추가
-    @Getter
     @Id
     private String applicationID;
 
@@ -34,39 +36,17 @@ public class SearchData {
 
     private boolean adr;
 
+    @JsonInclude(JsonInclude.Include.ALWAYS)
     private int fCnt;
 
     private int fPort;
 
     private String data;
 
+    private ObjectData objectData;
+
     private long curTime = System.currentTimeMillis();
 
 }
 
-    public void setFCnt(int fCnt) {
-        this.fCnt = fCnt;
-    }
 
-    public int getFPort() {
-        return fPort;
-    }
-
-    public void setFPort(int fPort) {
-        this.fPort = fPort;
-    }
-
-    public void setData(String data) {
-        this.data = data;
-    }
-//    public SearchData(String dataId, Long dataLatitude, Long dataLongitude, Long dataAngleX, Long dataAngleY, Byte status, Long battery) {
-//        this.dataId = dataId;
-//        this.dataLatitude = dataLatitude;
-//        this.dataLongitude = dataLongitude;
-//        this.dataAngleX = dataAngleX;
-//        this.dataAngleY = dataAngleY;
-//        this.status = status;
-//        this.battery = battery;
-//    }
-
-}
