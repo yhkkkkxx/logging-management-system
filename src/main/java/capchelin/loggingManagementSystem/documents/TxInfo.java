@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class TxInfo {
     @JsonProperty("frequency")
     private Long frequency;
+    @JsonProperty("dr")
     private Integer dr;
 
-    // Getters and setters for the above fields
 }

@@ -6,7 +6,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 //@JsonIgnoreProperties(ignoreUnknown = true)
 public class RxInfo {
+    @JsonProperty("gatewayID")
     private String gatewayID;
+    @JsonProperty("uplinkID")
     private String uplinkID;
     @JsonProperty("name")
     private String name;

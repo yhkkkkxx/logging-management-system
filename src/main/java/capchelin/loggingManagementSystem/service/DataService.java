@@ -68,4 +68,5 @@ public class DataService {
    public void deleteById(@PathVariable String id) { searchDataRepository.deleteById(id); }
 
     public void delete() { searchDataRepository.deleteAll(); }
+
 }
