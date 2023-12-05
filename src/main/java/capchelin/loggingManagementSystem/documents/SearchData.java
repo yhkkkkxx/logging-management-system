@@ -47,7 +47,7 @@ public class SearchData {
     private ObjectData objectData;
 
     @Field(name = "@timestamp", type = FieldType.Date)
-    private long curTime ;
+    private long curTime;
 
 }
 

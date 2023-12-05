@@ -13,6 +13,8 @@ import org.springframework.messaging.MessageHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.StreamSupport;
 
@@ -31,6 +33,24 @@ public class DataService {
             System.out.println("data: " + searchData.getData());
             System.out.println("SearchData successfully processed and saved to Elasticsearch.");
             searchData.setCurTime(System.currentTimeMillis());
+//            Long curTime = System.currentTimeMillis();
+//            SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+//            String str = timeFormat.format(new Date(curTime));
+//            searchData.setCurTime(str);
+
+//            System.out.println("ID: "+searchData.getApplicationID());
+//            System.out.println("Name: "+searchData.getApplicationName());
+//            System.out.println("deviceName: "+searchData.getDeviceName());
+//            System.out.println("devEUI: "+searchData.getDevEUI());
+//            System.out.println("Rx: "+searchData.getRxInfo());
+//            System.out.println("Tx: "+searchData.getTxInfo());
+//            System.out.println("FCnt: "+searchData.getFCnt());
+//            System.out.println("FPort: "+searchData.getFPort());
+//            System.out.println("Data: "+searchData.getData());
+//            System.out.println("ObjectData: "+searchData.getObjectData());
+//            System.out.println("curTime: "+searchData.getCurTime());
+
+
             return searchDataRepository.save(searchData);
 
         } catch (JsonProcessingException e) {
@@ -56,9 +76,20 @@ public class DataService {
 
         //System.currentTimeMillis()
         MessageHeaders headers = message.getHeaders();
-        Long id = (Long)headers.get("timestamp");
+
+        //System.out.println(headers);
+
+        //Long id = (Long)headers.get("timestamp");
+        Long id = System.currentTimeMillis();
         Payload payload = new Payload(id, headers, message.getPayload().toString());
-        payload.setId(System.currentTimeMillis());
+//        long curTime = System.currentTimeMillis();
+//        SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+//        String str = timeFormat.format(new Date(curTime));
+        //payload.setId(System.currentTimeMillis());
+        //System.out.println(id);
+//        System.out.println("paylod heaers :"+payload.getHeaders());
+//        System.out.println(payload.getPayload());
+//        System.out.println(payload.getId());
 
         return payloadRepository.save(payload);
     }
