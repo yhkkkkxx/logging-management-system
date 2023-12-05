@@ -23,6 +23,7 @@ public class SearchData {
 
 
     @Id
+    @JsonProperty("applicationID")
     private String applicationID;
 
     private String applicationName;
@@ -38,12 +39,13 @@ public class SearchData {
     private boolean adr;
 
     @JsonInclude(JsonInclude.Include.ALWAYS)
+    @JsonProperty("fCnt")
     private int fCnt;
-
+    @JsonProperty("fPort")
     private int fPort;
 
     private String data;
-
+    @JsonProperty("object")
     private ObjectData objectData;
 
     @Field(name = "@timestamp", type = FieldType.Date)

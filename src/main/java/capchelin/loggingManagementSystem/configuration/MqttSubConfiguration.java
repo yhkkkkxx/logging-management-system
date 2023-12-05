@@ -109,6 +109,7 @@ public class MqttSubConfiguration {
                 dataService.createGateway(message);
             }
             if(message.getHeaders().get("mqtt_receivedTopic").toString().startsWith("application/")) {
+                System.out.println(message.getPayload());
                 dataService.createApp(message);
             }
 

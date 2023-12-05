@@ -10,15 +10,16 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ObjectData {
     @JsonInclude(JsonInclude.Include.ALWAYS)
+    @JsonProperty("abnormal_detection")
     private String abnormal_detection;
 
     @JsonProperty("angleX")
     private int angleX;
-
+    @JsonProperty("angleY")
     private int angleY;
-
+    @JsonProperty("battery")
     private int battery;
-
+    @JsonProperty("drive_status")
     private String drive_status;
 
     @JsonProperty("falldown")
