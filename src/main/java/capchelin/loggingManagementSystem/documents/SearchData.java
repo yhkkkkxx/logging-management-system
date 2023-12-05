@@ -1,28 +1,26 @@
 package capchelin.loggingManagementSystem.documents;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jdk.jfr.Timespan;
-import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.elasticsearch.annotations.*;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 
-import java.time.Instant;
 import java.util.List;
 
 @Data
-@Document(indexName = "mqtt_data")
+@Document(indexName = "lora_data")
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SearchData {
-
-
     @Id
+    @Field(type = FieldType.Keyword)
+    private Long id;
+//    @Id
     @JsonProperty("applicationID")
     private String applicationID;
 
@@ -48,9 +46,26 @@ public class SearchData {
     @JsonProperty("object")
     private ObjectData objectData;
 
-    @Field(name = "@timestamp", type = FieldType.Date)
+    @Field(type = FieldType.Date)
     private long curTime;
 
+    @Override
+    public String toString() {
+        return "SearchData{" +
+                "applicationID='" + applicationID + '\'' +
+                ", applicationName='" + applicationName + '\'' +
+                ", deviceName='" + deviceName + '\'' +
+                ", devEUI='" + devEUI + '\'' +
+                ", rxInfo=" + rxInfo +
+                ", txInfo=" + txInfo +
+                ", adr=" + adr +
+                ", fCnt=" + fCnt +
+                ", fPort=" + fPort +
+                ", data='" + data + '\'' +
+                ", objectData=" + objectData +
+                ", curTime=" + curTime +
+                '}';
+    }
 }
 
 

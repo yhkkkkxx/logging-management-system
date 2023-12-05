@@ -14,8 +14,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.StreamSupport;
 
 @Service
@@ -24,20 +26,26 @@ public class DataService {
     private final SearchDataRepository searchDataRepository;
     private final PayloadRepository payloadRepository;
 
-    public SearchData createApp(@NotNull Message message) {
+    public SearchData createApp(Message message) {
         System.out.println("this is application");
+//        if (Objects.isNull(message)) {
+//
+//        }
 
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             SearchData searchData = objectMapper.readValue(message.getPayload().toString(), SearchData.class);
             System.out.println("data: " + searchData.getData());
             System.out.println("SearchData successfully processed and saved to Elasticsearch.");
-            searchData.setCurTime(System.currentTimeMillis());
-//            Long curTime = System.currentTimeMillis();
-//            SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-//            String str = timeFormat.format(new Date(curTime));
-//            searchData.setCurTime(str);
 
+//            Long time = System.currentTimeMillis();
+//            SimpleDateFormat timeFormat = new SimpleDateFormat("yyyyMMddhhmmss");
+//            String str = timeFormat.format(new Date(time));
+//            searchData.setCurTime(Long.parseLong(str));
+            searchData.setCurTime(System.currentTimeMillis());
+
+            System.out.println("search data: " + searchData);
+//
 //            System.out.println("ID: "+searchData.getApplicationID());
 //            System.out.println("Name: "+searchData.getApplicationName());
 //            System.out.println("deviceName: "+searchData.getDeviceName());

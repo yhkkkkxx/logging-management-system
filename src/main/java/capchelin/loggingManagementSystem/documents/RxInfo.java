@@ -18,5 +18,17 @@ public class RxInfo {
     private double loRaSNR;
     @JsonProperty("location")
     private Location location;
+
+    @Override
+    public String toString() {
+        return "RxInfo{" +
+                "gatewayID='" + gatewayID + '\'' +
+                ", uplinkID='" + uplinkID + '\'' +
+                ", name='" + name + '\'' +
+                ", rssi=" + rssi +
+                ", loRaSNR=" + loRaSNR +
+                ", location=" + location +
+                '}';
+    }
 }
 
